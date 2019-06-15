@@ -18,4 +18,4 @@ node_modules/
 .eslintcache
 
 # test, cos it needs server should be started to test
-test/
+test/*
