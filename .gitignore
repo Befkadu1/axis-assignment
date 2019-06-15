@@ -17,5 +17,3 @@ node_modules/
 # Optional eslint cache
 .eslintcache
 
-# test, cos it needs server should be started to test
-test/*
