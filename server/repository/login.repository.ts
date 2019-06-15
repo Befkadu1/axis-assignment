@@ -1,15 +1,30 @@
 import { User } from "../model/user.model";
-import { UserRepository } from "./user.repository";
+import { generateToken } from "../config/token-generator";
+var sqlite3 = require('sqlite3').verbose(); // create a Database object:
+let db = new sqlite3.Database('./db.sqlite');
 
 export class LoginRepository {
-  constructor(private userRepository = new UserRepository()) {}
 
-  async login(values: User): Promise<Partial<User>> {
-    // db.run(`INSERT INTO users (id, email, password, token) VALUES (?, ?, ?, ?)`, ['a8696ebf-2bff-47e2-b277-6b73ee1211b4', 'jane.doe@axis.com', 'test', '']);
-    const email = values.email;
-    const password = values.password;
-    const getPerson = await this.userRepository.getByEmailAndPassword(email, password);
-    const person = await this.userRepository.updateToken(getPerson); // updating the token when the user logs in
-  return person;
+  constructor() {}
+
+  async updateToken(person: User): Promise<Partial<User>> {
+    let token = generateToken(person);
+
+    let dataT = [token, person.email];
+    let sql = `UPDATE users SET token = ? WHERE email = ?`;
+    return new Promise(function(resolve, reject) {
+      db.run(sql, dataT, function(err) {
+        if (err) {
+          reject('Token not updated:' + err.message);
+        }
+
+        const Person = {
+          email:  person.email,
+          token
+        }
+        console.log(`Row(s) updated: ${this.changes}`);
+        resolve(Person)
+      });
+     }) 
   }
 }

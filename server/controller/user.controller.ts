@@ -9,7 +9,7 @@ export class UserController {
 
   async create( ctx: ParameterizedContext<Context>, values: User): Promise<User> {
     ctx.status = HttpStatusCodes.NoContent;
-    return this.userRepository.create(values);
+    return this.userRepository.create(ctx, values);
   }
 
 }
