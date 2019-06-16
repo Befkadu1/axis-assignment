@@ -4,4 +4,5 @@ export interface Device {
   model?: string;
   firmware?: string;
   sites_id?: string;
+  type?: string;
 }
