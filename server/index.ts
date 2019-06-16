@@ -5,7 +5,7 @@ import koaBody = require('koa-body');
 import { error } from './middleware/error';
 var sqlite3 = require('sqlite3').verbose(); // create a Database object:
 let db = new sqlite3.Database('./db.sqlite');
-db.run('CREATE TABLE if not exists users (id TEXT PRIMARY KEY NOT NULL, email text NOT NULL, password text NOT NULL, token text NOT NULL)');
+db.run('CREATE TABLE if not exists users (id TEXT PRIMARY KEY NOT NULL, email text NOT NULL, password text NOT NULL, token text)');
 
 const app = new Koa();
 const PORT = '3000';

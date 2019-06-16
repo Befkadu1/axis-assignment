@@ -7,10 +7,29 @@
     "test": "./node_modules/.bin/mocha test",
     "start": "rimraf ./dist && tsc && nodemon dist/index.js",
     "build": "tsc",
-    "compile": "yarn build && node dist/index.js"
+    "compile": "yarn build && node dist/index.js",
+    "test:all": "tsc && nyc mocha --exit dist/**/*.spec.js"
+  },
+  "nyc": {
+    "lines": 80,
+    "statements": 80,
+    "functions": 80,
+    "branches": 50,
+    "sourceMap": true,
+    "exclude": [
+      "**/*.spec.js",
+      "**/test",
+      "**/enums",
+      "**/models"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
   },
   "license": "UNLICENSED",
   "dependencies": {
+    "@types/mocha": "^5.2.7",
     "@types/pino": "^5.8.8",
     "chai": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
