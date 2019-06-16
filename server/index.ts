@@ -2,9 +2,10 @@ import * as Koa from 'koa';
 import { router } from './routes';
 import * as cors from 'kcors';
 import koaBody = require('koa-body');
+import { error } from './middleware/error';
 var sqlite3 = require('sqlite3').verbose(); // create a Database object:
 let db = new sqlite3.Database('./db.sqlite');
-db.run('CREATE TABLE if not exists users (id TEXT PRIMARY KEY NOT NULL, email text NOT NULL, password text NOT NULL, token text NOT NULL)');
+db.run('CREATE TABLE if not exists users (id TEXT PRIMARY KEY NOT NULL, email text NOT NULL, password text NOT NULL, token text)');
 
 const app = new Koa();
 const PORT = '3000';
@@ -16,7 +17,9 @@ app
             allowHeaders: ['Content-Type', 'Authorization', 'email']            
         }),
     )
-    .use(router.routes()).use(router.allowedMethods())
+    .use(error)
+    .use(router.routes())
+    .use(router.allowedMethods())
     .use(koaBody({ multipart: true }))
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));

@@ -1,19 +1,19 @@
-import { Device } from "../model/device.model";
+import { Site } from "../model/site.model";
+
 var sqlite3 = require('sqlite3').verbose(); // create a Database object:
 let db = new sqlite3.Database('./db.sqlite');
 
-export class DeviceRepository {
+export class SiteRepository {
   constructor() {}
-  async getAll(sites_id: string): Promise<Device[]> {
+  async getAll(): Promise<Site[]> {
     
     // sites table joined with devices, to get the Site name (Axis Lund or Axis Linköping)
-    let query = `SELECT sites.name as site, devices.id, devices.name, model, firmware FROM sites INNER JOIN devices ON sites.id = devices.sites_id WHERE (sites_id = "${sites_id}")`;
+    let query = `SELECT * FROM sites`;
    
     return new Promise(function(resolve, reject) {
       db.all(query, function (err, rows) {
         if(err) reject('No Sites found: ' + err.message);
         rows.map(row => {
-          row['type'] = 'device';  // adding type property for all devices
           return row;
         });
         resolve(rows)
