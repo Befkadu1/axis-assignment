@@ -8,7 +8,7 @@ export class SiteController {
   constructor(
     private siteRepo = new SiteRepository(),
   ) {}
-  async getAll(ctx:  ParameterizedContext<Context>): Promise<Site[]> {
+  async getAll(ctx: ParameterizedContext<Context>): Promise<Site[]> {
     ctx.status = HttpStatusCodes.Ok;
     const sites = await this.siteRepo.getAll();
     if (!sites) {

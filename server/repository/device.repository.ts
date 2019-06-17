@@ -10,7 +10,7 @@ export class DeviceRepository {
     let query = `SELECT sites.name as site, devices.id, devices.name, model, firmware, type FROM sites INNER JOIN devices ON sites.id = devices.sites_id WHERE (sites_id = "${sites_id}")`;
     return new Promise(function(resolve, reject) {
       db.all(query, function (err, rows) {
-        if(err) reject('No Sites found: ' + err.message);
+        if(err) reject('Internal Server Error: ' + err.message);
         resolve(rows)
       })
     }) 
