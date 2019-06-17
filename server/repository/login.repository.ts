@@ -7,7 +7,7 @@ export class LoginRepository {
 
   constructor() {}
 
-  async updateToken(person: User): Promise<Partial<User>> {
+  async updateToken(person: User): Promise<User> {
     let token = generateToken(person);
 
     let dataT = [token, person.email];

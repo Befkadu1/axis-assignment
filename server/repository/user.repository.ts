@@ -28,28 +28,18 @@ export class UserRepository {
  
   }
 
-  async getByEmailAndPassword(ctx: ParameterizedContext<Context>, email: string, password: string): Promise<User> {
+  async getUserByEmailAndPassword(ctx: ParameterizedContext<Context>, email: string, password: string): Promise<User> {
     let query = `SELECT * FROM users WHERE (email = "${email}" AND password = "${password}")`;
     return new Promise(function(resolve, reject) {
-        db.all(query, function (err, rows) {
-          if (rows.length === 0) { resolve(null);} // if user not found, returns null
-          rows.forEach(async function (row) {
-            if(row.email == email && row.password == password) {
-              resolve(row);
-            } else {
-              reject(ctx.throw(HttpStatusCodes.InternalServerError, { message: err.message }));
-            }
-          })
-        })
-    }) 
-  }
-
-  async getSitesByUserEmail(email: string): Promise<any> {
-    let query = `SELECT sites_id FROM users INNER JOIN sites_users ON users.id = sites_users.users_id AND users.email = "${email}" INNER JOIN sites ON sites_users.sites_id = sites.id`;
-    return new Promise(function(resolve, reject) {
       db.all(query, function (err, rows) {
-        if(err) reject("Error when looking for Site" + err.message)
-        resolve(rows);
+        if (rows.length === 0) { resolve(null);} // if user not found, returns null
+        rows.forEach(async function (row) {
+          if(row.email == email && row.password == password) {
+            resolve(row);
+          } else {
+            reject(ctx.throw(HttpStatusCodes.InternalServerError, { message: err.message }));
+          }
+        })
       })
     }) 
   }

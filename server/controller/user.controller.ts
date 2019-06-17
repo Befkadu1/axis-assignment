@@ -12,7 +12,7 @@ export class UserController {
     const id = uuid();
     const { email, password } = user;
     user.id = id;
-    const person = await this.userRepository.getByEmailAndPassword(ctx, email, password);
+    const person = await this.userRepository.getUserByEmailAndPassword(ctx, email, password);
      
       // if person exists the user is already in the db results a person will not be created in db
     if (person){

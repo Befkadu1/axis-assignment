@@ -10,11 +10,11 @@ export class LoginController {
     private loginRepo = new LoginRepository(),
     private userRepository = new UserRepository()) {}
 
-  async login(ctx: ParameterizedContext<Context>, values: User): Promise<Partial<User>> {
-    const email = values.email;
-    const password = values.password;
+  async login(ctx: ParameterizedContext<Context>, user: User): Promise<User> {
+    const email = user.email;
+    const password = user.password;
     ctx.status = HttpStatusCodes.Ok;
-    const getPerson = await this.userRepository.getByEmailAndPassword(ctx, email, password);
+    const getPerson = await this.userRepository.getUserByEmailAndPassword(ctx, email, password);
     if (!getPerson) {
       ctx.throw(HttpStatusCodes.NotFound, { message: 'Invalid email or password' });
     }

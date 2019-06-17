@@ -11,16 +11,16 @@ const app = new Koa();
 const PORT = '3000';
 
 app
-    .use(
-        cors({
-            credentials: true,
-            allowHeaders: ['Content-Type', 'Authorization', 'email']            
-        }),
-    )
-    .use(error)
-    .use(router.routes())
-    .use(router.allowedMethods())
-    .use(koaBody({ multipart: true }))
+  .use(
+    cors({
+      credentials: true,
+      allowHeaders: ['Content-Type', 'Authorization', 'email']            
+    }),
+  )
+  .use(error)
+  .use(router.routes())
+  .use(router.allowedMethods())
+  .use(koaBody({ multipart: true }))
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}.`));
 
