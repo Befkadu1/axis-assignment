@@ -12,7 +12,7 @@ export class DeviceController {
   ) {}
   async getAll(ctx:  ParameterizedContext<Context>, email: string): Promise<Device[]> {
     ctx.status = HttpStatusCodes.Ok;
-    const sites: [{sites_id: string}] = await this.siteRepository.getSiteIdsByUserEmail(email);
+    const sites: [{sites_id: string}] = await this.siteRepository.getSiteIdsByUserEmail(email); // from sites_users table
     if (!sites) ctx.throw(HttpStatusCodes.NotFound, { message: 'No Site found' });
     const devices = await this.devicesFromDB(sites);
     return devices;

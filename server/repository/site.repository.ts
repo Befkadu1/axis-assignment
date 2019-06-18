@@ -22,7 +22,8 @@ export class SiteRepository {
   }
 
   async getSiteIdsByUserEmail(email: string): Promise<any> {
-    let query = `SELECT sites_id FROM users INNER JOIN sites_users ON users.id = sites_users.users_id AND users.email = "${email}" INNER JOIN sites ON sites_users.sites_id = sites.id`;
+    let query = `SELECT sites_id FROM users JOIN sites_users ON users.id = sites_users.users_id AND users.email = "${email}"`;
+
     return new Promise(function(resolve, reject) {
       db.all(query, function (err, rows) {
         if(err) reject("Error when looking for Site" + err.message)
