@@ -15,5 +15,5 @@ router.use(bodyParser({}), logger());
 router.use('/ping', pingRoutes.routes(), pingRoutes.allowedMethods());
 router.use('/login', loginRoutes.routes(), loginRoutes.allowedMethods());
 router.use('/devices', auth, deviceRoutes.routes(), deviceRoutes.allowedMethods());
-router.use('/users', userRoutes.routes(), userRoutes.allowedMethods());
-router.use('/sites', siteRoutes.routes(), siteRoutes.allowedMethods());
+router.use('/users', auth, userRoutes.routes(), userRoutes.allowedMethods());
+router.use('/sites', auth, siteRoutes.routes(), siteRoutes.allowedMethods());
