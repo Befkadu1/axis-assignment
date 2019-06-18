@@ -14,6 +14,7 @@ export class LoginController {
     const email = user.email;
     const password = user.password;
     ctx.status = HttpStatusCodes.Ok;
+    if (!password) ctx.throw(HttpStatusCodes.NotFound, { message: 'Please enter your password' });
     const getPerson = await this.userRepository.getUserByEmailAndPassword(ctx, email, password);
     if (!getPerson) {
       ctx.throw(HttpStatusCodes.NotFound, { message: 'Invalid email or password' });
