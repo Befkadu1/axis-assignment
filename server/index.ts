@@ -30,4 +30,4 @@ function cleanup() {
 }
 
 process.on('SIGINT', cleanup);
-process.on('SIGTERM', cleanup);
+process.on('SIGTERM', cleanup); //  reset the terminal mode before exiting
